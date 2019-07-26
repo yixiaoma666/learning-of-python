@@ -11,7 +11,12 @@ class BPnet(object):
         self.maxiter = 2000  # 最大迭代次数
         self.nHidden = 4  # 隐含层神经元
         self.nOut = 1  # 输出层个数
-        pass
+        # 一下属性由系统生成
+        self.errlist = []  # 误差列表：保存了误差参数的变化用于评估收敛
+        self.dataMat = 0  # 训练集
+        self.classLabels = 0  # 分类标签集
+        self.nSampNum = 0  # 样本集列数
+        self.nSampDim = 0  # 样本列数
 
     def logistic(self, net):
         pass
@@ -26,16 +31,25 @@ class BPnet(object):
         pass
 
     def loadDataSet(self, filename):
+        self.dataMat = []
+        self.classLabels = []  # TODO
         pass
 
     def addcol(self, matrix1, matrix2):
         pass
 
-    def init_hiddenWB(self):
-        pass
+    def init_hiddenWB(self):  # 隐含层初始化
+        self.hi_w = 2.0 * (np.random.rand(self.nHidden, self.nSampDim) - 0.5)
+        self.hi_b = 2.0 * (np.random.rand(self.nHidden, 1) - 0.5)
+        self.hi_wb = np.mat(self.addcol(np.mat(self.hi_w), np.mat(self.hi_b)))
 
-    def bpTrain(self):
-        pass
+    def init_OutputWB(self):  # 输出层初始化
+        self.out_w = 2.0 * (np.random.rand(self.nOut, self.nHidden) - 0.5)
+        self.out_b = 2.0 * (np.random.rand(self.nOut, 1) - 0.5)
+        self.out_wb = np.mat(self.addcol(np.mat(self.out_w), np.mat(self.out_b)))
+
+        def bpTrain(self):
+            pass
 
     def BPClassfier(self, start, end, steps=30):
         pass
