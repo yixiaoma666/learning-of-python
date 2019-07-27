@@ -2,13 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class BPnet(object):
+class BPNet(object):
     def __init__(self):
         self.eb = 0.01  # 误差容限：当误差小于这个值时，算法收敛，程序停止
         self.iterator = 0  # 算法收敛时的迭代次数
         self.eta = 0.1  # 学习率：相当于步长
         self.mc = 0.3  # 动量因子：引入的一个调优参数，是主要的调优参数
-        self.maxiter = 2000  # 最大迭代次数
+        self.maxiter = 20000  # 最大迭代次数
         self.nHidden = 4  # 隐含层神经元
         self.nOut = 1  # 输出层个数
         # 一下属性由系统生成
@@ -22,12 +22,7 @@ class BPnet(object):
         return 1.0 / (1.0 + np.exp(-net))
 
     def dlogit(self, net):
-        return np.multiply(self.logistic(net), (1.0 - self.logistic(net)))
-
-    def draw(self, fun):
-        self.X = np.linspace(-5, 5, 100)
-        self.Y = fun(self.X)
-        plt.plot(self.X, self.Y)
+        return np.multiply(net, (1.0 - net))
 
     def errorfunc(self, inX):
         return np.sum(np.power(inX, 2)) * 0.5
@@ -92,7 +87,7 @@ class BPnet(object):
                 out_input = self.out_wb * (np.mat(tauex).T)
                 out = self.logistic(out_input)
                 z[i, j] = out
-            return x, z
+        return x, z
 
     def classfyLine(self, x, z):
         plt.contour(x, x, z, 1, color="black")
